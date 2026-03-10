@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SkinCalm – Eczema Tracker</title>
+    <meta name="description"
+        content="Track your eczema flares, steroid cream tapering, symptoms, and healing progress with photos." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;1,14..32,400&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="manifest" href="manifest.json" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="SkinCalm" />
+    <link rel="apple-touch-icon" href="app_icon.png" />
+</head>
+
+<body>
+
+    <!-- ═══ APP SHELL ═══ -->
+    <div class="app">
+
+        <!-- Top Bar -->
+        <header class="topbar">
+            <div class="topbar-left">
+                <span class="app-icon">🌿</span>
+                <span class="app-name">SkinCalm</span>
+            </div>
+            <button class="settings-trigger" id="settings-btn" aria-label="Settings">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="3" />
+                    <path
+                        d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
+                </svg>
+            </button>
+        </header>
+
+        <!-- ── CALENDAR TAB ── -->
+        <section class="view" id="view-calendar">
+
+            <!-- Month Nav -->
+            <div class="month-nav">
+                <button class="month-arrow" id="prev-month" aria-label="Previous month">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                        stroke-linecap="round">
+                        <polyline points="15,18 9,12 15,6" />
+                    </svg>
+                </button>
+                <div class="month-label" id="month-label">March 2026</div>
+                <button class="month-arrow" id="next-month" aria-label="Next month">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                        stroke-linecap="round">
+                        <polyline points="9,18 15,12 9,6" />
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Weekday Headers -->
+            <div class="cal-weekdays">
+                <span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span>
+            </div>
+
+            <!-- Calendar Grid -->
+            <div class="cal-grid" id="cal-grid"></div>
+
+            <!-- Legend -->
+            <div class="cal-legend">
+                <div class="legend-item"><span class="legend-dot flare-severe"></span>Severe flare</div>
+                <div class="legend-item"><span class="legend-dot flare-moderate"></span>Moderate</div>
+                <div class="legend-item"><span class="legend-dot flare-mild"></span>Mild</div>
+                <div class="legend-item"><span class="legend-dot cream-applied"></span>Cream applied</div>
+                <div class="legend-item"><span class="legend-dot no-flare"></span>Clear</div>
+            </div>
+
+            <!-- Quick Stats -->
+            <div class="quick-stats" id="quick-stats"></div>
+
+            <!-- Add Today Button -->
+            <button class="fab" id="fab-log" aria-label="Log today">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                    stroke-linecap="round">
+                    <line x1="12" y1="5" x2="12" y2="19" />
+                    <line x1="5" y1="12" x2="19" y2="12" />
+                </svg>
+            </button>
+        </section>
+
+        <!-- ── LOGBOOK TAB ── -->
+        <section class="view hidden" id="view-logbook">
+            <div class="logbook-header">
+                <h2>Logbook</h2>
+                <p class="logbook-sub">Detailed daily records</p>
+            </div>
+            <div class="logbook-list" id="logbook-list">
+                <div class="logbook-empty" id="logbook-empty">
+                    <div class="empty-icon">📓</div>
+                    <p>No entries yet. Tap <strong>+</strong> on the calendar to log a day.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Nav -->
+        <nav class="bottom-nav">
+            <button class="nav-btn active" id="nav-calendar" data-view="calendar">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                    <line x1="16" y1="2" x2="16" y2="6" />
+                    <line x1="8" y1="2" x2="8" y2="6" />
+                    <line x1="3" y1="10" x2="21" y2="10" />
+                </svg>
+                <span>Calendar</span>
+            </button>
+            <button class="nav-btn" id="nav-logbook" data-view="logbook">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                    <polyline points="14,2 14,8 20,8" />
+                    <line x1="16" y1="13" x2="8" y2="13" />
+                    <line x1="16" y1="17" x2="8" y2="17" />
+                    <polyline points="10,9 9,9 8,9" />
+                </svg>
+                <span>Logbook</span>
+            </button>
+        </nav>
+    </div>
+
+    <!-- ═══ LOG ENTRY MODAL ═══ -->
+    <div class="sheet-backdrop hidden" id="log-modal-backdrop">
+        <div class="sheet" id="log-modal">
+            <div class="sheet-handle"></div>
+
+            <div class="sheet-header">
+                <h3 id="log-modal-title">Log Entry</h3>
+                <button class="sheet-close" id="log-modal-close" aria-label="Close">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                        stroke-linecap="round">
+                        <line x1="18" y1="6" x2="6" y2="18" />
+                        <line x1="6" y1="6" x2="18" y2="18" />
+                    </svg>
+                </button>
+            </div>
+
+            <div class="sheet-body">
+
+                <!-- Flare Status -->
+                <div class="form-section">
+                    <label class="form-label">Flare Status</label>
+                    <div class="pill-group" id="flare-status-group">
+                        <button class="pill" data-val="none">✨ Clear</button>
+                        <button class="pill" data-val="mild">🟡 Mild</button>
+                        <button class="pill" data-val="moderate">🟠 Moderate</button>
+                        <button class="pill" data-val="severe">🔴 Severe</button>
+                    </div>
+                </div>
+
+                <!-- Symptoms -->
+                <div class="form-section" id="symptom-section">
+                    <label class="form-label">Symptoms</label>
+                    <div class="symptom-grid" id="symptom-grid">
+                        <button class="symptom-chip" data-sym="blisters">� Fluid blisters</button>
+                        <button class="symptom-chip" data-sym="itching">� Itchiness</button>
+                        <button class="symptom-chip" data-sym="inflammation">🔴 Inflammation</button>
+                        <button class="symptom-chip" data-sym="dryness">🏜️ Dry skin</button>
+                        <button class="symptom-chip" data-sym="cracks">� Cracks &amp; fissures</button>
+                        <button class="symptom-chip" data-sym="pain">⚡ Pain / soreness</button>
+                        <button class="symptom-chip" data-sym="sweating">� Excess sweating</button>
+                        <button class="symptom-chip" data-sym="nailchanges">💅 Nail changes</button>
+                    </div>
+
+                    <!-- Itch intensity slider -->
+                    <div class="slider-row">
+                        <span class="slider-label">Itch intensity</span>
+                        <div class="slider-wrap">
+                            <input type="range" class="itch-slider" id="itch-slider" min="0" max="10" step="1"
+                                value="0" />
+                            <span class="slider-val" id="itch-val">0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cream Applied -->
+                <div class="form-section">
+                    <label class="form-label">Cream Applied Tonight?</label>
+                    <div class="pill-group" id="cream-applied-group">
+                        <button class="pill" data-val="yes">Yes</button>
+                        <button class="pill" data-val="no">No</button>
+                        <button class="pill" data-val="skipped">Forgot</button>
+                    </div>
+                </div>
+
+                <!-- Cream Name -->
+                <div class="form-section" id="cream-name-section">
+                    <label class="form-label">Which Cream?</label>
+                    <div class="cream-input-row">
+                        <input type="text" class="text-input" id="cream-name-input"
+                            placeholder="e.g. Betamethasone 0.1%" list="cream-history-list" />
+                        <datalist id="cream-history-list"></datalist>
+                    </div>
+                </div>
+
+                <!-- Tapering Phase -->
+                <div class="form-section">
+                    <label class="form-label">Tapering Phase</label>
+                    <div class="pill-group wrap" id="taper-phase-group">
+                        <button class="pill" data-val="daily">Daily</button>
+                        <button class="pill" data-val="eod">Every Other Day</button>
+                        <button class="pill" data-val="e3d">Every 3rd Day</button>
+                        <button class="pill" data-val="e2w">Twice a Week</button>
+                        <button class="pill" data-val="stopped">Stopped</button>
+                    </div>
+                </div>
+
+                <!-- Photos -->
+                <div class="form-section">
+                    <label class="form-label">Photos of Hands</label>
+                    <div class="photo-row">
+                        <label class="photo-add-btn" for="photo-input" id="photo-add-label">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round">
+                                <path
+                                    d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
+                                <circle cx="12" cy="13" r="4" />
+                            </svg>
+                            <span>Add Photo</span>
+                        </label>
+                        <input type="file" id="photo-input" accept="image/*" multiple style="display:none" />
+                        <div class="photo-thumbs" id="photo-thumbs"></div>
+                    </div>
+                </div>
+
+                <!-- Triggers & Lifestyle -->
+                <div class="form-section">
+                    <label class="form-label">Triggers &amp; Lifestyle</label>
+                    <p class="form-hint">Tracking these helps you spot patterns in your dyshidrotic eczema.</p>
+
+                    <div class="trigger-label-row">🌤️ Weather today</div>
+                    <div class="pill-group wrap" id="weather-group">
+                        <button class="pill" data-val="sunny">☀️ Sunny</button>
+                        <button class="pill" data-val="humid">💧 Humid</button>
+                        <button class="pill" data-val="hot">🔆 Hot</button>
+                        <button class="pill" data-val="dry">🏜️ Dry</button>
+                        <button class="pill" data-val="cold">❄️ Cold</button>
+                        <button class="pill" data-val="rainy">🌧️ Rainy</button>
+                    </div>
+
+                    <div class="slider-row" style="margin-top:10px;">
+                        <span class="slider-label">😓 Stress</span>
+                        <div class="slider-wrap">
+                            <input type="range" class="itch-slider" id="stress-slider" min="0" max="10" step="1"
+                                value="0" />
+                            <span class="slider-val" id="stress-val">0</span>
+                        </div>
+                    </div>
+
+                    <div class="trigger-label-row" style="margin-top:10px;">🥗 Diet today</div>
+                    <div class="pill-group" id="diet-group">
+                        <button class="pill" data-val="healthy">🥦 Healthy</button>
+                        <button class="pill" data-val="mixed">😐 Mixed</button>
+                        <button class="pill" data-val="unhealthy">🍟 Unhealthy</button>
+                    </div>
+
+                    <div class="trigger-label-row" style="margin-top:10px;">💧 Water intake</div>
+                    <div class="pill-group" id="water-group">
+                        <button class="pill" data-val="low">Low</button>
+                        <button class="pill" data-val="ok">OK</button>
+                        <button class="pill" data-val="good">Good</button>
+                    </div>
+
+                    <div class="toggle-section">
+                        <div class="toggle-row">
+                            <span class="toggle-row-label">💅 Wearing nail polish?</span>
+                            <input type="checkbox" id="nail-polish-toggle" class="toggle-input" />
+                            <label for="nail-polish-toggle" class="toggle-label"></label>
+                        </div>
+                        <div class="toggle-row">
+                            <span class="toggle-row-label">🧼 Hands in water a lot?</span>
+                            <input type="checkbox" id="wet-hands-toggle" class="toggle-input" />
+                            <label for="wet-hands-toggle" class="toggle-label"></label>
+                        </div>
+                        <div class="toggle-row">
+                            <span class="toggle-row-label">🧤 Wore gloves today?</span>
+                            <input type="checkbox" id="gloves-toggle" class="toggle-input" />
+                            <label for="gloves-toggle" class="toggle-label"></label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Notes -->
+                <div class="form-section">
+                    <label class="form-label">Notes</label>
+                    <textarea class="text-input textarea" id="notes-input"
+                        placeholder="Any other observations, what you ate, products used, how your skin feels…"
+                        rows="3"></textarea>
+                </div>
+
+                <button class="btn-save" id="save-entry-btn">Save Entry</button>
+                <button class="btn-delete hidden" id="delete-entry-btn">Delete Entry</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══ PHOTO LIGHTBOX ═══ -->
+    <div class="lightbox hidden" id="lightbox">
+        <button class="lightbox-close" id="lightbox-close">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                stroke-linecap="round">
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+        </button>
+        <img id="lightbox-img" src="" alt="Hand photo" />
+        <div class="lightbox-caption" id="lightbox-caption"></div>
+    </div>
+
+    <!-- ═══ SETTINGS SHEET ═══ -->
+    <div class="sheet-backdrop hidden" id="settings-backdrop">
+        <div class="sheet" id="settings-sheet">
+            <div class="sheet-handle"></div>
+            <div class="sheet-header">
+                <h3>Settings</h3>
+                <button class="sheet-close" id="settings-close" aria-label="Close">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                        stroke-linecap="round">
+                        <line x1="18" y1="6" x2="6" y2="18" />
+                        <line x1="6" y1="6" x2="18" y2="18" />
+                    </svg>
+                </button>
+            </div>
+            <div class="sheet-body">
+                <div class="form-section">
+                    <label class="form-label">Reminder Time</label>
+                    <p class="form-hint">Get a nightly nudge to log your cream application.</p>
+                    <input type="time" class="text-input" id="reminder-time" value="21:00" />
+                    <button class="btn-secondary" id="enable-notif-btn" style="margin-top:10px;">Enable Nightly
+                        Reminder</button>
+                </div>
+
+                <div class="form-section">
+                    <label class="form-label">Export Data</label>
+                    <p class="form-hint">Download all your entries as a JSON file.</p>
+                    <button class="btn-secondary" id="export-btn">Export JSON</button>
+                </div>
+
+                <div class="form-section danger-zone">
+                    <label class="form-label" style="color:var(--danger)">Danger Zone</label>
+                    <button class="btn-danger" id="clear-all-btn">Clear All Data</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══ TOAST ═══ -->
+    <div class="toast hidden" id="toast"></div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
