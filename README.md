@@ -1,44 +1,32 @@
-# 🌿 SkinCalm – Eczema Tracker
+# 🌿 SkinCalm – Eczema Management System
 
-SkinCalm is a lightweight, privacy-focused Progressive Web App (PWA) designed to help you track eczema flares, steroid cream tapering, symptoms, and healing progress.
+**SkinCalm** is a specialized Progressive Web App (PWA) developed to address the challenges of tracking chronic skin conditions. I built this tool to provide a structured, privacy-first way to monitor flare-ups, manage steroid cream tapering, and identify environmental triggers.
 
 ![SkinCalm Logo](app_icon.png)
 
-## ✨ Features
+## 🩺 The Problem & Solution
+Managing dyshidrotic eczema or similar conditions often requires meticulous tracking of medication, symptoms, and lifestyle factors. Traditional apps are often too generic or lack offline privacy. **SkinCalm** was created as a purpose-built solution to bridge this gap, offering a focused interface for daily logging and long-term trend analysis.
 
-- **📅 Calendar View**: Quickly see flare severity and cream application history.
-- **📓 Detailed Logbook**: Track symptoms like blisters, itch intensity, inflammation, and more.
-- **📸 Progress Photos**: Staged photos to monitor skin healing over time.
-- **🧴 Tapering Support**: Specifically designed for managing steroid cream schedules (Daily to Stopped).
-- **🌤️ Trigger Tracking**: Log weather, stress, diet, and lifestyle factors (e.g., wet hands, nail polish).
-- **🔒 Privacy First**: All data is stored locally in your browser's `localStorage`. No accounts or server-side storage required.
-- **📱 PWA Ready**: Install it to your phone's home screen for an app-like experience.
-- **📥 Data Portability**: Export your data as a JSON file at any time.
+## ✨ Key Features
+- **Medication Management**: Log steroid cream application with integrated tapering phase tracking (Daily to Stopped).
+- **Symptom Intelligence**: Monitor specific indicators like fluid blisters, inflammation, and itch intensity (0-10 scale).
+- **Trigger Analysis**: Correlate skin health with weather, stress levels, diet, and lifestyle habits (e.g., wet hands, glove use).
+- **Visual Progress**: Staged photo uploads for objective healing assessment.
+- **Privacy-First Architecture**: All data is stored locally via `localStorage`. No external accounts or servers required.
+- **PWA Experience**: Fully responsive and installable to iOS/Android home screens for offline-first access.
 
-## 🚀 How to Use
+## 🚀 Deployment
+This is a static PWA and can be hosted effortlessly on services like **Vercel** or **GitHub Pages**.
 
-1. **Visit the App**: [Insert your hosted URL here]
-2. **Log Today**: Tap the green **+** button on the calendar to log your skin status.
-3. **Review Trends**: Use the Logbook tab to see detailed notes and photos.
-4. **Settings**: Adjust nightly reminders or export your data from the settings menu.
+### GitHub Pages Setup:
+1. Enable **Pages** in repo settings.
+2. Select the `main` branch and the `/root` folder.
+3. Your management system will be live at `https://[username].github.io/skin-tracker-app/`.
 
-## 🛠️ Installation (for development)
-
-Simply clone the repository and open `index.html` in any modern browser.
-
-```bash
-git clone https://github.com/YOUR_USERNAME/skin-tracker-app.git
-```
-
-## 🌐 Hosting on GitHub Pages
-
-This app is entirely static, making it perfect for GitHub Pages:
-
-1. Go to your repository **Settings** on GitHub.
-2. Select **Pages** from the sidebar.
-3. Set the **Source** to "Deploy from a branch" and select `main` (or `master`) and the `/root` folder.
-4. Click **Save**. Your app will be live in minutes!
+## 🛠️ Tech Stack
+- **Frontend**: Vanilla HTML5, CSS3, JavaScript (ES6+).
+- **Offline**: Service Workers & Web App Manifest.
+- **Iconography**: Custom-generated AI assets.
 
 ---
-
-*Stay calm, heal better.* 🌿
+*Created as a personal utility for better skin health management.*

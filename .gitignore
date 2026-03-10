@@ -1,0 +1,24 @@
+# 📂 Development files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# 📦 Dependencies (if applicable)
+node_modules/
+package-lock.json
+
+# 🛠️ Logs and Temporary Files
+entries.json
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+/tmp/
+
+# 🌐 Environment Variables (Optional)
+.env
+.env.local
+
+# 🔧 Git ignore local user preferences
+.gitignore.local
