@@ -1,11 +1,16 @@
-# 🌿 SkinCalm – Eczema Management System
-
 **SkinCalm** is a specialized Progressive Web App (PWA) developed to address the challenges of tracking chronic skin conditions. I built this tool to provide a structured, privacy-first way to monitor flare-ups, manage steroid cream tapering, and identify environmental triggers.
 
-![SkinCalm Logo](app_icon.png)
+<p align="center">
+  <img src="app_icon.png" width="150" alt="SkinCalm Logo">
+</p>
 
 ## 🩺 The Problem & Solution
 Managing dyshidrotic eczema or similar conditions often requires meticulous tracking of medication, symptoms, and lifestyle factors. Traditional apps are often too generic or lack offline privacy. **SkinCalm** was created as a purpose-built solution to bridge this gap, offering a focused interface for daily logging and long-term trend analysis.
+
+## The app interface layout
+<p align="center">
+<img src="https://github.com/user-attachments/assets/3e1a0ff1-0f0d-4ce0-931a-defc5358237c" width="300" alt="SkinCalm Calendar View">
+</p>
 
 ## ✨ Key Features
 - **Medication Management**: Log steroid cream application with integrated tapering phase tracking (Daily to Stopped).
